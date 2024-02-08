@@ -1,0 +1,97 @@
+
+
+.container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+  z-index: 1;
+  background: transparent;
+}
+
+
+
+.logo{
+  font-weight: 900;
+  cursor: pointer;
+  background: transparent;
+}
+
+
+
+.buttonContainer{
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+
+
+.button{
+  border: none;
+  background-color: white;
+  color: #000000;
+  width: 6rem;
+  height: 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+
+
+.transparentButton {
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background: transparent;
+  padding-top:10px;
+}
+
+.transparentButton1{
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background: transparent;
+  padding-top:11px;
+}
+
+.avatar{
+  background-color: #BDBDBD;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  cursor: pointer;
+  align-items: center;
+  gap: .5rem;
+  width: auto;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: height .3s ease-in-out;
+}
+
+
+
+
+.avatar:hover{
+  aspect-ratio: 0;
+  height: 5.5rem;
+  border-radius: 10px;
+}
+
+.logoutIcon{
+  color: white;
+  z-index: 1;
+  width: 100%;
+  height: 33%;
+  padding: .2rem;
+}
+
+.logoutIcon:hover{
+  background: #A0A3AF;
+  transition: all .5 ease-in-out;
+}
+
+

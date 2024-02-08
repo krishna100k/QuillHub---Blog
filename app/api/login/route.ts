@@ -23,26 +23,26 @@ export const POST = async (req: NextRequest) => {
     const response = await client.query(query, values);
     await client.end();
     if (response.rows.length <= 0) {
-      return NextResponse.json("User Not Found!");
+      return NextResponse.json("User Not Found!", {status:400});
     }
 
     let passwordMatch = await bcrypt.compare(password, response.rows[0].password);
     if(!passwordMatch){
-        return NextResponse.json("Invalid Password!");
+        return NextResponse.json("Invalid Password!", {status:400});
     }
     
     let token = jwt.sign({ username, password }, secret, {expiresIn: 60 * 60 * 24 * 7});
     
     let cookieResponse =  NextResponse.json({token}, {status: 200});
-    cookieResponse.cookies.set({
-      name: 'JWT',
-      value: token,
-      expires: 60 * 60 * 24 * 7,
+
+    cookieResponse.cookies.set('JWT', token, {
+      maxAge: 60 * 60 * 24 * 7, 
       httpOnly: true,
-    })
+      secure: true
+    });
 
     return cookieResponse;
   } catch (err) {
-    console.log(err);
+    return NextResponse.json(err);
   }
 };

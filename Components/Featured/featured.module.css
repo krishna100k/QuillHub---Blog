@@ -1,0 +1,11 @@
+.container{
+    /* border: solid 1px; */
+    width: 99%;
+    margin: auto;
+    margin-top: .7rem;
+    height: 80vh;
+    border-radius: 10px;
+    background-image: url("/featured.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}

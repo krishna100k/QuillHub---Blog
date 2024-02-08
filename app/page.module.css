@@ -1,0 +1,29 @@
+.strip{
+    width: 100%;
+    padding: 3rem 1.5rem 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.strip p{
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.buttons button{
+    border: none;
+    background-color: #DBE0EB;
+    color: black;
+    width: 5rem;
+    height: 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+}

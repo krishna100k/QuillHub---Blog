@@ -2,9 +2,13 @@ import styles from "./featured.module.css";
 
 import React from "react";
 
-const Featured = () => {
+interface FeaturedProps {
+  imageLink?: string | undefined;
+}
+
+const Featured : React.FC<FeaturedProps> = ({imageLink}) => {
   return (
-    <div className={styles.container}>
+    <div style={{backgroundImage: `url(${imageLink})`}} className={styles.container}>
         
     </div>
     );

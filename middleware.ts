@@ -53,7 +53,7 @@ return null;
 };
 
 export const config = {
-  matcher: ["/api/authenticated/comments", "/api/me", "/api/authenticated/user"]
+  matcher: ["/api/authenticated/comments", "/api/me", "/api/authenticated/user", "/api/authenticated/blog"]
 };
 
 

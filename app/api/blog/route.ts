@@ -13,3 +13,4 @@ export const GET = async(req: NextRequest) => {
         return NextResponse.json(err, {status: 400})
     }
 }
+

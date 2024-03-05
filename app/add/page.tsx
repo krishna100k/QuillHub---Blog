@@ -103,7 +103,7 @@ const Add = () => {
       );
       const userid = userResp.data[0].id;
       if (!imgUrl) {
-        return alert("cannot find image !");
+        return alert("Cover Image Not Found!");
       }
       const body = {
         userid,

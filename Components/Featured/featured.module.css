@@ -8,4 +8,5 @@
     background-image: url("/featured.png");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 }

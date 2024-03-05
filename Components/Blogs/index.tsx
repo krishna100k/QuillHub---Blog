@@ -1,16 +1,28 @@
-import Blog from "./blog"
-import styles from "./blogs.module.css"
-const Blogs = () => {
-  return (
-    <div className={styles.container}>
-        <Blog />
-        <Blog />
-        <Blog />
-        <Blog />
-        <Blog />
-        <Blog />
-        </div>
-  )
+import Blog from "./blog";
+import styles from "./blogs.module.css";
+
+export interface Blog {
+  id?: number;
+  userid?: number;
+  title?: string;
+  description?: string;
+  image?: string;
+  content?: string;
 }
 
-export default Blogs
+interface BlogsProps {
+  blog: Blog[];
+}
+
+
+const Blogs : React.FC<BlogsProps> = async ({blog}) => {
+  return (
+    <div className={styles.container}>
+      {blog.map((blogData: Blog, i: number) => {
+        return <Blog key={i} data={blogData} />;
+      })}
+    </div>
+  );
+};
+
+export default Blogs;

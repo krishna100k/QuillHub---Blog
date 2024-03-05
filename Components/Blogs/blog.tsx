@@ -1,19 +1,23 @@
+"use client"
+
 import styles from "./blog.module.css";
-const blog = () => {
+import { Blog } from ".";
+import { useRouter } from "next/navigation";
+
+const blog = ({data}: {data: Blog}) => {
+  const router = useRouter()
   return (
     <div className={styles.container}>
       <div className={styles.film}></div>
-      <img className={styles.image} src="/featured.png" alt="Image" />
+      <img className={styles.image} src={data?.image} alt="Image" />
       <div className={styles.textContent}>
-        <p className={styles.title}>Exploring the universe's wonders</p>
+        <p className={styles.title}>{data?.title}</p>
         <p className={styles.para}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-          tenetur consectetur natus vel enim ex, labore explicabo similique
-          ipsam! Fuga eaque nostrum molestias!
+          {data?.description}
         </p>
         <p className={styles.userName}>by krshna10k</p>
       </div>
-      <button>Read More</button>
+      <button onClick={() => router.push(`/post/${data?.id}`)}>Read More</button>
     </div>
   );
 };

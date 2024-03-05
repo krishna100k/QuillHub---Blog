@@ -31,7 +31,7 @@ export const POST = async (req: NextRequest) => {
     await client.end();
     let token = jwt.sign({ username, password }, secret, {expiresIn: 60 * 60 * 24 * 7});
     let cookieResponse = NextResponse.json({
-      message: "Inserted Data into users successfully",
+      message: "Registration successful !",
       response,
     });
     cookieResponse.cookies.set('JWT', token, {

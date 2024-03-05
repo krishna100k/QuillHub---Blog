@@ -94,4 +94,13 @@
   transition: all .5 ease-in-out;
 }
 
+.publishButton{
+  border: none;
+  background-color: #35792B;
+  width: 5rem;
+  height: 2rem;
+  cursor: pointer;
+  border-radius: .5rem;
+}
+
 

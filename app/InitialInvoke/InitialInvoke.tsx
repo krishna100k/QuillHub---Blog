@@ -1,23 +1,37 @@
+"use client";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import { loaded, loading, setUser } from "../redux/userSlice";
+import { useEffect } from "react";
+import axios from "axios";
 
-import { cookies } from "next/headers";
-import { UseDispatch, useDispatch } from "react-redux";
-
+//Fetch User on Mount!
+export const fetchUser = async (dispatch: Dispatch<any>) => {
+  try {
+    const response = await axios.get(`/api/me`, {
+      withCredentials: true,
+    });
+    const userName: string = response.data;
+    dispatch(loading())
+    dispatch(setUser(userName))
+    dispatch(loaded())
+  } catch (err) {
+    console.log(err);
+    dispatch(loading())
+    dispatch(setUser(null))
+    dispatch(loaded())
+  }
+};
 
 
 
 const InitialInvoke = () => {
-  const fetchUser = async () => {
-    try {
-      const response = await fetch(`${process.env.base_url}/api/me`, {
-        headers: { Cookie: cookies().toString() },
-      });
-      const user = await response.json();;
-      console.log(user)
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  fetchUser();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchUser(dispatch);
+  }, []);
   return <></>;
 };
 

@@ -8,3 +8,12 @@
 body{
   background-color: #121624;
 }
+
+
+
+.quill-editor .ql-editor {
+  min-height: 100vh;
+  font-size: 16px;
+  padding: 10px;
+}
+

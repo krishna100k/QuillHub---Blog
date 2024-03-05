@@ -1,7 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import { jwtVerify, JWTPayload, decodeJwt } from "jose";
 
-
+interface extendedRes extends NextResponse{
+  username?: string;
+}
 
 function getJwtSecretKey() {
   const secret = process.env.JWT_SECRET;
@@ -35,10 +37,10 @@ export const middleware = async (req: NextRequest) => {
 
   if (token) {
     try {
-          const payload = await verifyJwtToken(token);
+          const payload: JWTPayload | extendedRes = await verifyJwtToken(token);
         if (payload) {
           if(url === "/api/me"){
-            return NextResponse.json(payload);
+            return NextResponse.json(payload?.username);
           }
              NextResponse.next();
         }
@@ -51,7 +53,7 @@ return null;
 };
 
 export const config = {
-  matcher: ["/api/authenticated/comments", "/api/me"]
+  matcher: ["/api/authenticated/comments", "/api/me", "/api/authenticated/user"]
 };
 
 

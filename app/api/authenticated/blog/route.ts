@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest) => {
     let response = await client.query(query, values);
     await client.end();
     return NextResponse.json({
-      message: "Inserted Data into users successfully",
+      message: "Blog published successfully!",
       response,
     });
   } catch (err) {

@@ -1,44 +1,63 @@
-"use client"
+"use client";
 
 import Header from "@/Components/Header";
 import styles from "./login.module.css";
 import Link from "next/link";
-import { useState } from "react";
-import axios from "axios"
+import { FormEvent, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { fetchUser } from "../InitialInvoke/InitialInvoke";
+import { useDispatch } from "react-redux";
+import { CircularProgress } from "@mui/material";
 
-const Register = () => {
+const Login = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const body = {
     username,
     password,
   };
 
-  const submit = async () => {
-    try{
-      const response = await axios.post("/api/login", body);
-      alert("Logged in successfully!")
-      console.log(response);
-
-    }catch(err : any){
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+       await axios.post("/api/login", body);
+      fetchUser(dispatch);
+      alert("Logged in successfully!");
+      setLoading(false);
+      router.push("/");
+    } catch (err: any) {
       console.log(err);
-      alert(err?.response?.data)
+      setLoading(false);
+      alert(err?.response?.data);
     }
-  }
+  };
   return (
     <div>
       <Header />
-      <div className={styles.registerBox}>
+      <form className={styles.registerBox}>
         <h2 className={styles.heading}>Login</h2>
         <div className={styles.dataBox}>
           <p>Username</p>
-          <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" />
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
+          />
         </div>
         <div className={styles.dataBox}>
           <p>Password</p>
-          <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+          />
         </div>
         <div className={styles.strip}>
           <p>
@@ -47,13 +66,19 @@ const Register = () => {
               Register
             </Link>
           </p>
-          <button onClick={submit} className={styles.submit}>
+          {
+            loading && <CircularProgress
+            color="secondary"
+            style={{ width: "20px", height: "20px" }}
+          /> 
+          }
+          <button disabled={loading} onClick={submit} className={styles.submit}>
             Submit
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
 
-export default Register;
+export default Login;

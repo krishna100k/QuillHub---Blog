@@ -18,11 +18,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  InitialInvoke();
   return (
     <ReduxProvider >
     <html lang="en">
       <body className={inter.className}>
+        <InitialInvoke />
         {children}
         <Footer />
         </body>

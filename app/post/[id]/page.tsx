@@ -45,9 +45,12 @@ const Post = async ({ params }: { params: { id: number } }) => {
       <Featured imageLink={blog?.image} />
       <div className={styles.container}>
         <div className={styles.content}>
-          <h1 className={styles.heading}>{blog.title}</h1>
           <div className={styles.contentRender}>
-            <div
+            <div className={styles.contentTop}>
+          <h1 className={styles.heading}>{blog.title}</h1>
+          <p>{blog?.description}</p>
+          </div>
+            <div className={styles.htmlRender}
               dangerouslySetInnerHTML={{ __html: blog?.content as string }}
             />
           </div>

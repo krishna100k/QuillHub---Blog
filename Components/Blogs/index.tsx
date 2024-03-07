@@ -8,6 +8,7 @@ export interface Blog {
   description?: string;
   image?: string;
   content?: string;
+  username?: string;
 }
 
 interface BlogsProps {

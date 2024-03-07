@@ -59,10 +59,10 @@ const Header = ({ home, submit }: { home?: boolean | undefined | null; submit?: 
           <div className={styles.avatar}>
             <Avatar
               sx={{ width: 50, height: 50, cursor: "pointer", zIndex: 1 }}
-              alt={"Krishna"}
+              alt={user}
               src="/static/images/avatar/1.jpg"
             />
-            <LogoutIcon onClick={logout} className={styles.logoutIcon} />
+            <LogoutIcon sx={{width: "100%", height: "35%"}} onClick={logout} className={styles.logoutIcon} />
           </div>
         </div>
       ) : (

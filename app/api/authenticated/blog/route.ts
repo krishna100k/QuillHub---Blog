@@ -9,9 +9,9 @@ export const POST = async (req: NextRequest) => {
   }
   try {
     let data = await req.json();
-    const { userid, title, description, image, content } = data;
-    const query = `INSERT INTO blog (userid, title, description, image, content) VALUES ($1, $2, $3, $4, $5)`;
-    const values = [userid, title, description, image, content];
+    const { userid, title, description, image, content, username } = data;
+    const query = `INSERT INTO blog (userid, title, description, image, content, username) VALUES ($1, $2, $3, $4, $5, $6)`;
+    const values = [userid, title, description, image, content, username];
     let response = await client.query(query, values);
     await client.end();
     return NextResponse.json({

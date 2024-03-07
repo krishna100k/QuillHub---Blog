@@ -4,6 +4,14 @@ import Blogs from "@/Components/Blogs";
 import Header from "@/Components/Header";
 import { Blog } from "@/Components/Blogs";
 
+
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Wow!")
+  }, 5000);
+})
+
+
 const fetchAllBlogs = async () => {
   try {
     const response = await fetch(`${process.env.base_url}/api/blog`, {
@@ -21,7 +29,18 @@ const fetchAllBlogs = async () => {
 export default async function Home() {
   const blog: Blog[] = await fetchAllBlogs();
 
-  const imageLink = blog[blog.length - 2].image
+  // Finding Featured Index
+  let featuredIndex = -1;
+    blog.forEach((blog, i) => {
+    if(blog.id == 14){
+      featuredIndex = i
+      return i;
+    }
+  })
+  //
+
+  const imageLink = blog[featuredIndex].image
+
 
   return (
     <main className={styles.main}>

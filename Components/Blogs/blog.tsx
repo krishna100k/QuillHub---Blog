@@ -15,7 +15,7 @@ const blog = ({data}: {data: Blog}) => {
         <p className={styles.para}>
           {data?.description}
         </p>
-        <p className={styles.userName}>by krshna10k</p>
+        <p className={styles.userName}>by {data?.username}</p>
       </div>
       <button onClick={() => router.push(`/post/${data?.id}`)}>Read More</button>
     </div>

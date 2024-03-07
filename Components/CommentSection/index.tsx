@@ -33,7 +33,7 @@ const CommentSection: React.FC<{ blogid: number }> = ({blogid}) => {
 
     try {
       const response = await axios.post(`/api/authenticated/comments`, body, {withCredentials: true});
-      alert(response?.data?.message);
+      console.log(response)
       setCommentData("")
       router.refresh();
     } catch (err) {

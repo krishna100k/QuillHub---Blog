@@ -110,12 +110,18 @@ const Add = () => {
         title,
         description,
         image: imgUrl,
-        content
+        content,
+        username: user
       };
       const response = await axios.post(`/api/authenticated/blog`, body, {
         withCredentials: true,
       });
       alert(response?.data?.message);
+      setTitle("");
+      setDescription("");
+      setContent("");
+      setImgAdd("");
+
     } catch (err) {
       console.log(err);
     }

@@ -21,7 +21,7 @@ const fetchAllBlogs = async () => {
 export default async function Home() {
   const blog: Blog[] = await fetchAllBlogs();
 
-  const imageLink = blog[0].image
+  const imageLink = blog[blog.length - 2].image
 
   return (
     <main className={styles.main}>

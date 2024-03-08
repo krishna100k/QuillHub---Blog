@@ -26,12 +26,22 @@
 
 .contentRender{
     margin: auto;
-    width: 50%;
+    width: 50rem;
     font-size: 14px;
     font-weight: 500;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+.img{
+ width: 100%;   
+ object-fit: cover;
+ margin-top: 2rem;
+}
+
+.htmlRender img{
+    width: 100%;
 }
 
 
@@ -79,4 +89,10 @@
 
 .commentArea textarea {
     color: black;
+}
+
+@media only screen and (max-width: 844px){
+    .contentRender{
+        width: 100%;
+    }
 }

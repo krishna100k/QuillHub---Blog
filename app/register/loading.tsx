@@ -1,9 +1,18 @@
 import React from 'react'
 import { CircularProgress } from '@mui/material'
 
+const styles = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100vh'
+}
+
 const loading = () => {
   return (
-    <CircularProgress sx={{margin: "10% 0% 10% 50%"}} />
+    <div style={styles}>
+    <CircularProgress />
+    </div>
   )
 }
 

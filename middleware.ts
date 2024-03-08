@@ -42,7 +42,10 @@ export const middleware = async (req: NextRequest) => {
           if(url === "/api/me"){
             return NextResponse.json(payload?.username);
           }
-             NextResponse.next();
+          if(payload?.username === '' || !payload?.username || payload?.username === undefined){
+            NextResponse.json("Invalid AuthToken", {status: 500})
+          }
+          NextResponse.next();
         }
     } catch (error) {
         return NextResponse.json("Authentication Error", { status:400});

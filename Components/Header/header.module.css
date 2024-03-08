@@ -103,4 +103,10 @@
   border-radius: .5rem;
 }
 
+.linkButton{
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.8);
+  margin-left: 1rem;
+  font-weight: lighter;
+}
+
 

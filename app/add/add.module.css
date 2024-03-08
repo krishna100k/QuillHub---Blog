@@ -46,3 +46,9 @@
   .coverImg{
     width: 100%;
   }
+
+  @media only screen and (max-width: 968px){
+   .contentContainer{
+          width: 100%;
+      }
+  }

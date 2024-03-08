@@ -3,13 +3,10 @@ import Featured from "@/Components/Featured";
 import Blogs from "@/Components/Blogs";
 import Header from "@/Components/Header";
 import { Blog } from "@/Components/Blogs";
+import { redirect } from "next/navigation";
+import Strip from "@/Components/Strip";
 
 
-const promise = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve("Wow!")
-  }, 5000);
-})
 
 
 const fetchAllBlogs = async () => {
@@ -46,13 +43,7 @@ export default async function Home() {
     <main className={styles.main}>
       <Header home={true} />
       <Featured imageLink={imageLink} />
-      <div className={styles.strip}>
-        <p>Recent Blogs</p>
-        <div className={styles.buttons}>
-          <button>Previous</button>
-          <button>Next</button>
-        </div>
-      </div>
+      <Strip />
       <Blogs blog={blog} />
     </main>
   );

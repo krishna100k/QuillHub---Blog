@@ -1,10 +1,10 @@
 import Header from "@/Components/Header";
 import styles from "./post.module.css";
 import React from "react";
-import Featured from "@/Components/Featured";
 import Comments from "@/Components/Comments";
 import { Blog } from "@/Components/Blogs";
 import CommentSection from "@/Components/CommentSection";
+
 
 export interface Comment extends Blog {
   username?: string;
@@ -42,13 +42,13 @@ const Post = async ({ params }: { params: { id: number } }) => {
   return (
     <>
       <Header />
-      <Featured imageLink={blog?.image} />
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.contentRender}>
             <div className={styles.contentTop}>
           <h1 className={styles.heading}>{blog.title}</h1>
           <p>{blog?.description}</p>
+          <img src={blog?.image} alt="" className={styles.img}/>
           </div>
             <div className={styles.htmlRender}
               dangerouslySetInnerHTML={{ __html: blog?.content as string }}
@@ -61,7 +61,6 @@ const Post = async ({ params }: { params: { id: number } }) => {
             return <Comments key={i} comment = {comment} />
           })
         }
-
       </div>
     </>
   );

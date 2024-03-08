@@ -5,7 +5,7 @@ export const GET = async(req: NextRequest) => {
     const client = await connectionEstablished();
     if(!client) return "Client not established!";
     try{
-        const query = `SELECT * FROM blog;`
+        const query = `SELECT * FROM blog ORDER BY id DESC;`
         let response = await client.query(query);
         await client.end();
         return NextResponse.json(response.rows, {status: 200});

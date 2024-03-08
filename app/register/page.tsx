@@ -3,18 +3,23 @@
 import Header from "@/Components/Header";
 import styles from "./register.module.css";
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation'
+import { fetchUser } from "../InitialInvoke/InitialInvoke";
+import { UseDispatch, useDispatch } from "react-redux";
+import { CircularProgress } from "@mui/material";
 
 const Register = () => {
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [fullname, setFullname] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const body = {
     name: fullname,
@@ -23,7 +28,7 @@ const Register = () => {
     password,
   };
 
-  const submit = async () => {
+  const submit = async (e: FormEvent) => {
     if(fullname === ""){
       return alert("name is Required!")
     }else if (username === ""){
@@ -33,16 +38,20 @@ const Register = () => {
     }else if (email === ""){
       return alert("email is required!")
     }
+    e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(
         `/api/register`,
         body
       );
-      alert("Registration Successful!")
-      console.log(response);
-      router.push("/")
+      fetchUser(dispatch);
+      alert("Logged in successfully!");
+      setLoading(false);
+      router.push("/");
     } catch (err) {
       console.log(err);
+      setLoading(false);
       alert("Username or Email already exists!")
     }
   };
@@ -91,6 +100,12 @@ const Register = () => {
               Login
             </Link>
           </p>
+          {
+            loading && <CircularProgress
+            color="secondary"
+            style={{ width: "20px", height: "20px" }}
+          /> 
+          }
           <button onClick={submit} className={styles.submit}>Submit</button>
         </div>
       </div>
@@ -99,3 +114,7 @@ const Register = () => {
 };
 
 export default Register;
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+

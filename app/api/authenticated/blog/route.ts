@@ -26,13 +26,22 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) => {
   const client = await connectionEstablished();
   let searchParams = req.nextUrl.searchParams;
-  let id = searchParams.get('id')
+  let username = searchParams.get('username')
   
   if(!client){
       return NextResponse.json("Internal Server Error", { status: 500 });
   }
   try{
-      const query = `SELECT * FROM blog LEFT JOIN users ON blog.userid = users.id WHERE users.id = $1 ;`
+      const userQuery = `SELECT id from users WHERE username = $1`
+      const userValues = [username]
+      const userResp = await client.query(userQuery, userValues);
+      const id = userResp.rows[0]?.id
+      const query = `SELECT blog.id AS id, blog.title AS title, blog.description AS description, blog.image AS image
+      FROM blog
+      LEFT JOIN users ON blog.userid = users.id
+      WHERE users.id = $1
+      ORDER BY blog.id DESC;
+      `
       const values = [id]
       let response = await client.query(query, values);
       await client.end();

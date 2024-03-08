@@ -8,7 +8,13 @@ import { fetchUser } from "@/app/InitialInvoke/InitialInvoke";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-const Header = ({ home, submit }: { home?: boolean | undefined | null; submit?: any }) => {
+const Header = ({
+  home,
+  submit,
+}: {
+  home?: boolean | undefined | null;
+  submit?: any;
+}) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -25,8 +31,7 @@ const Header = ({ home, submit }: { home?: boolean | undefined | null; submit?: 
       const data = await response.json();
       fetchUser(dispatch);
       alert(data);
-      router.push("/")
-      
+      router.push("/");
     } catch (err) {
       console.log(err);
     }
@@ -44,25 +49,41 @@ const Header = ({ home, submit }: { home?: boolean | undefined | null; submit?: 
       </h2>
       {user ? (
         <div className={styles.buttonContainer}>
-          <button className={styles.transparentButton1}>
+          <div className={styles.transparentButton1}>
             {pathname === "/add" ? (
-              <button onClick={submit} className={styles.publishButton}>Publish</button>
+              <button onClick={submit} className={styles.publishButton}>
+                Publish
+              </button>
             ) : (
-              <Link
-                style={{ textDecoration: "none", color: "floralwhite" }}
-                href={"/add"}
-              >
-                Add a Post
-              </Link>
+              <>
+                <Link
+                  className={styles.linkButton}
+                  style={{ textDecoration: "none", color: "floralwhite" }}
+                  href={`/userblogs/${user}`}
+                >
+                  Your Blogs
+                </Link>
+                <Link
+                  className={styles.linkButton}
+                  style={{ textDecoration: "none", color: "floralwhite" }}
+                  href={"/add"}
+                >
+                  Write
+                </Link>
+              </>
             )}
-          </button>
+          </div>
           <div className={styles.avatar}>
             <Avatar
               sx={{ width: 50, height: 50, cursor: "pointer", zIndex: 1 }}
               alt={user}
               src="/static/images/avatar/1.jpg"
             />
-            <LogoutIcon sx={{width: "100%", height: "35%"}} onClick={logout} className={styles.logoutIcon} />
+            <LogoutIcon
+              sx={{ width: "100%", height: "35%" }}
+              onClick={logout}
+              className={styles.logoutIcon}
+            />
           </div>
         </div>
       ) : (

@@ -51,7 +51,7 @@ const CommentSection: React.FC<{ blogid: number }> = ({blogid}) => {
           className={styles.commentInput}
           placeholder="Write a Comment"
         ></textarea>
-        <button onClick={submitHandler} className={styles.submit}>Submit</button>
+        <button disabled={commentData === "" && true} onClick={submitHandler} className={styles.submit}>Submit</button>
       </div>
     </form>
   );

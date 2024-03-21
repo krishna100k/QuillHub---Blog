@@ -1,5 +1,5 @@
 
-import Blog from "./blog";
+import Blog from "./Blogs";
 import styles from "./blogs.module.css";
 
 export interface Blog {

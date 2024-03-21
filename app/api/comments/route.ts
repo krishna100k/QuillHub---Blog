@@ -5,7 +5,12 @@ export const GET = async (req: NextRequest) => {
   const searchParams = req.nextUrl.searchParams;
   const blogid = searchParams.get("blogid");
   const client = await connectionEstablished();
-  if (!client) return "Client not established!";
+  if (!client) {
+    return NextResponse.json(
+      { error: "Client not established!" },
+      { status: 500 }
+    );
+  }
   try {
     const query = `SELECT comments.id AS id, comments.username AS username, comments.comment AS comment
         FROM comments

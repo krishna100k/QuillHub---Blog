@@ -22,7 +22,7 @@ const getPost = async (id: number) => {
   }
 };
 
-export const getComments = async (id: number) => {
+ const getComments = async (id: number) => {
   try {
     const res = await fetch(
       `${process.env.base_url}/api/comments?blogid=${id}`,

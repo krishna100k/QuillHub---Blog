@@ -16,7 +16,7 @@ const Blogs: React.FC<Props> = ({ blog, username }) => {
       <h1>Your Blogs</h1>
       {user === username && blog.map((individualBlog) => {
         return (
-          <div className={styles.blogs}>
+          <div key={individualBlog?.id} className={styles.blogs}>
             <Blog key={individualBlog?.id} blog={individualBlog} />
           </div>
         );

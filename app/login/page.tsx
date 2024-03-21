@@ -61,7 +61,7 @@ const Login = () => {
         </div>
         <div className={styles.strip}>
           <p>
-            Don't have an account ?{" "}
+            Don&apos;t have an account ?
             <Link style={{ background: "transparent" }} href={"/register"}>
               Register
             </Link>

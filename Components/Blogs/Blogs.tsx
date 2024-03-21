@@ -4,7 +4,7 @@ import styles from "./blog.module.css";
 import { Blog } from ".";
 import { useRouter } from "next/navigation";
 
-const blog = ({data}: {data: Blog}) => {
+const Blogs = ({data}: {data: Blog}) => {
   const router = useRouter()
   return (
     <div className={styles.container}>
@@ -22,4 +22,4 @@ const blog = ({data}: {data: Blog}) => {
   );
 };
 
-export default blog;
+export default Blogs;

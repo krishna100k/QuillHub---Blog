@@ -56,6 +56,10 @@
   cursor: pointer;
   background: transparent;
   padding-top:11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .avatar{
@@ -106,7 +110,6 @@
 
 .linkButton{
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.8);
-  margin-left: 1rem;
   font-weight: lighter;
 }
 

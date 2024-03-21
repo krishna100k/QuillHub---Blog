@@ -64,7 +64,7 @@ export const PUT = async (req: NextRequest) => {
     const values = [userid, title, description, image, content];
     const response = await client.query(query, values);
     await client.end();
-    return NextResponse.json({response}, {status: 400})
+    return NextResponse.json({response}, {status: 200})
 
   }catch(err){
     return NextResponse.json(err, {status: 400})
@@ -74,13 +74,14 @@ export const PUT = async (req: NextRequest) => {
 export const DELETE = async (req: NextRequest) => {
   const searchParams = req.nextUrl.searchParams;
   const id = searchParams.get('id');
+  console.log(id);
   const client = await connectionEstablished();
   if(!client) return "No client";
   try{
     const query = `DELETE FROM blog WHERE id = ${id}`;
     const response = await client.query(query);
     await client.end();
-    return NextResponse.json({response}, {status: 400})
+    return NextResponse.json({response}, {status: 200})
   }catch(err){
     return NextResponse.json(err, {status: 400})
   }

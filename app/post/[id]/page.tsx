@@ -14,7 +14,7 @@ export interface Comment extends Blog {
 
 const getPost = async (id: number) => {
   try {
-    const res = await fetch(`${process.env.base_url}/api/oneblog?id=${id}`);
+    const res = await fetch(`${process.env.base_url}/api/oneblog?id=${id}`, {cache: "no-store"});
     const data = await res.json();
     return data;
   } catch (err) {
@@ -48,7 +48,7 @@ const Post = async ({ params }: { params: { id: number } }) => {
             <div className={styles.contentTop}>
           <h1 className={styles.heading}>{blog.title}</h1>
           <p>{blog?.description}</p>
-          <img src={blog?.image} alt="" className={styles.img}/>
+          <img src={blog?.image} alt="Cover Image" className={styles.img}/>
           </div>
             <div className={styles.htmlRender}
               dangerouslySetInnerHTML={{ __html: blog?.content as string }}

@@ -3,7 +3,6 @@ import Featured from "@/Components/Featured";
 import Blogs from "@/Components/Blogs";
 import Header from "@/Components/Header";
 import { Blog } from "@/Components/Blogs";
-import { redirect } from "next/navigation";
 import Strip from "@/Components/Strip";
 
 
@@ -24,25 +23,25 @@ const fetchAllBlogs = async () => {
 };
 
 export default async function Home() {
-  const blog: Blog[] = await fetchAllBlogs();
+  const blogData: Blog[] = await fetchAllBlogs();
+  const blog = blogData.slice(0, 6);
 
   // Finding Featured Index
   let featuredIndex = -1;
     blog.forEach((blog, i) => {
-    if(blog.id == 14){
+    if(blog.id == 38){
       featuredIndex = i
       return i;
     }
   })
   //
 
-  const imageLink = blog[featuredIndex].image
 
 
   return (
     <main className={styles.main}>
       <Header home={true} />
-      <Featured imageLink={imageLink} />
+      <Featured blogData={blog[featuredIndex]} />
       <Strip />
       <Blogs blog={blog} />
     </main>

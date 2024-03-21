@@ -1,36 +1,34 @@
 "use client";
+
 import Header from "@/Components/Header";
-import styles from "./add.module.css";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import styles from "./edit.module.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { imageDB } from "./config";
-import { v4 } from "uuid";
-import axios from "axios";
+import { useState } from "react";
+import { useSelector, UseSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { Blog } from "@/Components/Blogs";
+import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
+import { imageDB } from "@/app/add/config";
+import { v4 } from "uuid";
 
-const Add = () => {
-  
+const Edit = () => {
   const router = useRouter();
+  const { id } = useParams();
 
   const user: string | null = useSelector(
     (state: { user: { user: string } }) => state?.user?.user
   );
+
 
   useEffect(() => {
     if (user === null) {
       router.push("/");
     }
   }, [user, router]);
-
-  const [title, setTitle] = useState<string | undefined>("");
-  const [description, setDescription] = useState<string | undefined>("");
-  const [content, setContent] = useState("");
-  const [cover, setCover] = useState<File | undefined>();
-  const [imgAdd, setImgAdd] = useState<string | undefined>("");
-  const [loading, setLoading] = useState<boolean>(false);
 
   const modules = {
     toolbar: [
@@ -65,6 +63,34 @@ const Add = () => {
     "video",
   ];
 
+  const [blogData, setBlogData] = useState<Blog | undefined>(undefined)
+  const [title, setTitle] = useState<string | undefined>("");
+  const [description, setDescription] = useState<string | undefined>("");
+  const [content, setContent] = useState<any>("");
+  const [cover, setCover] = useState<File | undefined>();
+  const [imgAdd, setImgAdd] = useState<string | undefined>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [imgupload, setImgUpload] = useState<string | undefined>();
+
+
+  useEffect(() => {
+    const getBlog = async () => {
+      try {
+        const response = await axios.get(`/api/authenticated/oneBlog?id=${id}`);
+        const data: Blog = response.data;
+        setBlogData(data)
+        setTitle(data?.title);
+        setDescription(data?.description);
+        setContent(data?.content);
+        setImgAdd(data?.image);
+        setImgUpload(data?.image);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getBlog();
+  }, []);
+
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e?.target?.files;
     if (!files) return "File Not Found";
@@ -82,7 +108,7 @@ const Add = () => {
   const uploadFile = async () => {
     try {
       if (!cover) {
-        return 
+        return;
         // alert("Please Select Cover Image");
       }
       const imgRef = ref(imageDB, `files/${v4()}`);
@@ -95,44 +121,48 @@ const Add = () => {
     }
   };
 
+  const deleteFile = async () => {
+    const fileRef = ref(imageDB, blogData?.image);
+
+    try {
+      await deleteObject(fileRef);
+    } catch (error) {
+      console.error('Error deleting file:', error);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
-      setLoading(true)
-      const imgUrl: string | void = await uploadFile();
-      const userResp = await axios.get(
-        `/api/authenticated/user?username=${user}`,
-        { withCredentials: true }
-      );
-      const userid = userResp.data[0].id;
-      if (!imgUrl) {
-        return alert("Cover Image Not Found!");
+      setLoading(true);
+      const downloadURL = await uploadFile();
+      if (downloadURL) {
+        await deleteFile();
+        const body = {
+          userid: blogData?.userid,
+          title,
+          description,
+          image: downloadURL,
+          content
+        };
+        const response = await axios.put(`/api/authenticated/blog?id=${id}`, body, { withCredentials: true });
+        console.log(response);
+        setLoading(false);
+        router.push(`/`);
+        alert("Blog Edited Successfully!");
+      } else {
+        setLoading(false);
+        alert("Failed to upload cover image.");
       }
-      const body = {
-        userid,
-        title,
-        description,
-        image: imgUrl,
-        content,
-        username: user
-      };
-      const response = await axios.post(`/api/authenticated/blog`, body, {
-        withCredentials: true,
-      });
-      alert(response?.data?.message);
-      setLoading(false);
-      setTitle("");
-      setDescription("");
-      setContent("");
-      setImgAdd("");
-
     } catch (err) {
+      setLoading(false);
       console.log(err);
+      alert("An error occurred while editing the blog.");
     }
   };
 
   return (
     <div className={styles.container}>
-      <Header submit={handleSubmit} loading = {loading} />
+      <Header submit={handleSubmit} loading = {loading} blogId={id as string} />
       <div className={styles.contentContainer}>
         <label className={styles.customFileUpload}>
           <span>Cover Image</span>
@@ -166,4 +196,4 @@ const Add = () => {
   );
 };
 
-export default Add;
+export default Edit;

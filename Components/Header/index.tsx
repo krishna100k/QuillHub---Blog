@@ -7,14 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "@/app/InitialInvoke/InitialInvoke";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { CircularProgress } from "@mui/material";
 
-const Header = ({
-  home,
-  submit,
-}: {
+type Props = {
   home?: boolean | undefined | null;
   submit?: any;
-}) => {
+  loading?: boolean;
+  blogId?: string;
+};
+
+const Header = ({ home, submit, loading, blogId }: Props) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -50,10 +52,17 @@ const Header = ({
       {user ? (
         <div className={styles.buttonContainer}>
           <div className={styles.transparentButton1}>
-            {pathname === "/add" ? (
-              <button onClick={submit} className={styles.publishButton}>
-                Publish
-              </button>
+            {pathname === "/add" || pathname === `/edit/${blogId}` ? (
+              <>
+                {loading && <CircularProgress />}
+                <button
+                  disabled={loading}
+                  onClick={submit}
+                  className={styles.publishButton}
+                >
+                  Publish
+                </button>
+              </>
             ) : (
               <>
                 <Link

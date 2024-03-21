@@ -59,7 +59,7 @@ const Register = () => {
   return (
     <div>
       <Header />
-      <div className={styles.registerBox}>
+      <form className={styles.registerBox}>
         <h2 className={styles.heading}>Register</h2>
         <div className={styles.dataBox}>
           <p>Fullname</p>
@@ -108,7 +108,7 @@ const Register = () => {
           }
           <button onClick={submit} className={styles.submit}>Submit</button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

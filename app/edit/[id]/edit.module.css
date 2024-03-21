@@ -1,0 +1,54 @@
+.contentContainer{
+    width: 60rem;
+    margin: auto;
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+}
+
+.title{
+    background: transparent;
+    border: solid 1px #CCCCCC;
+    width: 100%;
+    padding: 1rem;
+}
+
+.file{
+    background: transparent;
+    color: white;
+}
+
+.customFileUpload {
+    display: inline-block;
+    position: relative;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: transparent;
+    padding: 6px 12px;
+  }
+
+  
+  .customFileUpload span {
+    margin-right: 8px;
+  }
+  
+  .customFileUpload input[type="file"] {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .coverImg{
+    width: 100%;
+  }
+
+  @media only screen and (max-width: 968px){
+   .contentContainer{
+          width: 100%;
+      }
+  }

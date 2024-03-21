@@ -8,6 +8,8 @@ import { fetchUser } from "@/app/InitialInvoke/InitialInvoke";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { CircularProgress } from "@mui/material";
+import { useStore } from 'react-redux';
+import { useEffect, useState } from "react";
 
 type Props = {
   home?: boolean | undefined | null;
@@ -16,14 +18,32 @@ type Props = {
   blogId?: string;
 };
 
+interface RootState {
+  user: {
+    user: string;
+  };
+
+}
+
 const Header = ({ home, submit, loading, blogId }: Props) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
 
-  const user = useSelector(
-    (state: { user: { user: string } }) => state.user.user
-  );
+  const store = useStore();
+
+  const [mounted, setMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    setMounted(true);
+  }, [mounted])
+
+  // const user = useSelector(
+  //   (state: { user: { user: string } }) => state.user.user
+  // );
+  const state = store.getState() as RootState;
+  const user = mounted && state?.user?.user
+
 
   const logout = async () => {
     try {

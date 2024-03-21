@@ -12,7 +12,7 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 import { Blog } from "@/Components/Blogs";
 import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
-import { imageDB } from "@/app/add/config";
+import { imageDB } from "@/app/config";
 import { v4 } from "uuid";
 
 const Edit = () => {

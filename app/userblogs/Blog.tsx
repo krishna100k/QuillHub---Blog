@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios"
 import { getStorage, ref, deleteObject } from 'firebase/storage';
 import firebase from 'firebase/compat/app'; 
-import { imageDB } from "../add/config";
+import { imageDB } from "../config";
 
 
 interface Props{

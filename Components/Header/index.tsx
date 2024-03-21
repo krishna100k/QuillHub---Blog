@@ -95,7 +95,7 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
                 <Link
                   className={styles.linkButton}
                   style={{ textDecoration: "none", color: "floralwhite" }}
-                  href={"/"}
+                  href={"/add"}
                 >
                   Write
                 </Link>

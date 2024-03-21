@@ -2,7 +2,7 @@
 import Header from "@/Components/Header";
 import styles from "./add.module.css";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -11,13 +11,28 @@ import { v4 } from "uuid";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+interface RootState {
+  user: {
+    user: string;
+  };
+}
+
 const Add = () => {
-  
   const router = useRouter();
 
-  const user: string | null = useSelector(
-    (state: { user: { user: string } }) => state?.user?.user
-  );
+  const store = useStore()
+
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, [mounted]);
+
+  // const user = useSelector(
+  //   (state: { user: { user: string } }) => state.user.user
+  // );
+  const state = store.getState() as RootState;
+  const user = mounted && state?.user?.user;
 
   useEffect(() => {
     if (user === null) {
@@ -82,7 +97,7 @@ const Add = () => {
   const uploadFile = async () => {
     try {
       if (!cover) {
-        return 
+        return;
         // alert("Please Select Cover Image");
       }
       const imgRef = ref(imageDB, `files/${v4()}`);
@@ -97,7 +112,7 @@ const Add = () => {
 
   const handleSubmit = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const imgUrl: string | void = await uploadFile();
       const userResp = await axios.get(
         `/api/authenticated/user?username=${user}`,
@@ -113,7 +128,7 @@ const Add = () => {
         description,
         image: imgUrl,
         content,
-        username: user
+        username: user,
       };
       const response = await axios.post(`/api/authenticated/blog`, body, {
         withCredentials: true,
@@ -124,7 +139,6 @@ const Add = () => {
       setDescription("");
       setContent("");
       setImgAdd("");
-
     } catch (err) {
       console.log(err);
     }
@@ -132,7 +146,7 @@ const Add = () => {
 
   return (
     <div className={styles.container}>
-      <Header submit={handleSubmit} loading = {loading} />
+      <Header submit={handleSubmit} loading={loading} />
       <div className={styles.contentContainer}>
         <label className={styles.customFileUpload}>
           <span>Cover Image</span>

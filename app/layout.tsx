@@ -22,7 +22,7 @@ export default function RootLayout({
 
   return (
     <ReduxProvider >
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" >
       <body className={inter.className}>
         <InitialInvoke />
         {children}

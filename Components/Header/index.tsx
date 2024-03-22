@@ -27,7 +27,7 @@ interface RootState {
   };
 }
 
-const fetchUser = async (dispatch: Dispatch<any>) => {
+const fetchUser: any = async (dispatch: Dispatch<any>) => {
   try {
     const response = await axios.get(`/api/me`, {
       withCredentials: true,
@@ -36,6 +36,7 @@ const fetchUser = async (dispatch: Dispatch<any>) => {
     dispatch(loading());
     dispatch(setUser(userName));
     dispatch(loaded());
+    return userName
   } catch (err) {
     console.log(err);
     dispatch(loading());
@@ -51,20 +52,29 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
 
 
 
-  const store = useStore();
+  // const store = useStore();
 
-  const [mounted, setMounted] = useState<boolean>(false);
+  // const [mounted, setMounted] = useState<boolean>(false);
 
-  const state = store.getState() as RootState;
-  let user = mounted ? state?.user?.user : null;
+  // // const state = store.getState() as RootState;
+  // // let user = mounted ? state?.user?.user : null;
+  // const user = useSelector((state : {user: {user: string}}) => state?.user?.user)
+  // console.log(user)
+
+  const [user, setUser] = useState<string | null>()
 
   useEffect(() => {
-    fetchUser(dispatch);
+    const settingUser = async () => {
+      const data = await fetchUser(dispatch);
+      setUser(data)
+    }
+
+    settingUser();
   }, [user]);
 
-  useEffect(() => {
-    setMounted(true);
-  }, [mounted]);
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, [mounted]);
 
   
 

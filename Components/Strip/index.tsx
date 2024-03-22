@@ -10,7 +10,7 @@ const Strip = () => {
     <div className={styles.strip}>
     <p>Recent Blogs</p>
     <div className={styles.buttons}>
-      <button onClick={() => router.push("/all")}>View More</button>
+      <button onClick={() => router.push("/all")}>All Blogs</button>
     </div>
   </div>
   )

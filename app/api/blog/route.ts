@@ -1,7 +1,10 @@
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectionEstablished } from "../db";
+import { cookies } from "next/headers";
 
 export const GET = async(req: NextRequest) => {
+    cookies();
     const client = await connectionEstablished();
     if (!client) {
         return NextResponse.json({ error: "Client not established!" }, { status: 500 });

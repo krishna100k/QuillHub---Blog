@@ -108,8 +108,7 @@ const Edit = () => {
   const uploadFile = async () => {
     try {
       if (!cover) {
-        return;
-        // alert("Please Select Cover Image");
+        return null;
       }
       const imgRef = ref(imageDB, `files/${v4()}`);
       await uploadBytes(imgRef, cover);
@@ -135,13 +134,12 @@ const Edit = () => {
     try {
       setLoading(true);
       const downloadURL = await uploadFile();
-      if (downloadURL) {
-        await deleteFile();
+        downloadURL && await deleteFile();
         const body = {
           userid: blogData?.userid,
           title,
           description,
-          image: downloadURL,
+          image: downloadURL ? downloadURL : imgAdd,
           content
         };
         const response = await axios.put(`/api/authenticated/blog?id=${id}`, body, { withCredentials: true });
@@ -149,10 +147,7 @@ const Edit = () => {
         setLoading(false);
         router.push(`/`);
         alert("Blog Edited Successfully!");
-      } else {
-        setLoading(false);
-        alert("Failed to upload cover image.");
-      }
+
     } catch (err) {
       setLoading(false);
       console.log(err);

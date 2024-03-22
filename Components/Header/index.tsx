@@ -4,12 +4,15 @@ import styles from "./header.module.css";
 import Link from "next/link";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "@/app/InitialInvoke/InitialInvoke";
+import { Dispatch } from "redux";
+// import { fetchUser } from "@/app/InitialInvoke/InitialInvoke";
+import { loaded, loading, setUser } from "../../app/redux/userSlice";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { CircularProgress } from "@mui/material";
 import { useStore } from 'react-redux';
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 type Props = {
   home?: boolean | undefined | null;
@@ -25,6 +28,23 @@ interface RootState {
 
 }
 
+ const fetchUser = async (dispatch: Dispatch<any>) => {
+  try {
+    const response = await axios.get(`/api/me`, {
+      withCredentials: true,
+    });
+    const userName: string = response.data;
+    dispatch(loading())
+    dispatch(setUser(userName))
+    dispatch(loaded())
+  } catch (err) {
+    console.log(err);
+    dispatch(loading())
+    dispatch(setUser(null))
+    dispatch(loaded())
+  }
+};
+
 const Header = ({ home, submit, loading, blogId }: Props) => {
   const dispatch = useDispatch();
   const pathname = usePathname();
@@ -32,23 +52,17 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
 
   const store = useStore();
 
-  const [mounted, setMounted] = useState<boolean>(false);
   const [user, setUser] = useState<string | null >();
 
-
-
-
   useEffect(() => {
-    setMounted(true);
-  }, [mounted])
+    fetchUser(dispatch);
+  }, []);
+
 
   useEffect(() => {
     const state = store.getState() as RootState;
-    mounted && setUser(state?.user?.user)
-  }, [user, mounted])
-
-
-
+    setUser(state?.user?.user)
+  }, [user])
 
 
   const logout = async () => {
@@ -76,7 +90,7 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
           QuillHub
         </Link>
       </h2>
-      {user !== null ? (
+      {user ? (
         <div className={styles.buttonContainer}>
           <div className={styles.transparentButton1}>
             {pathname === "/write" || pathname === `/edit/${blogId}` ? (

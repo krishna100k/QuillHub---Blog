@@ -29,6 +29,7 @@ const Write = () => {
   const store = useStore();
 
   const [mounted, setMounted] = useState<boolean>(false);
+  const [user, setUser] =  useState<string | null | boolean>(null)
 
   useEffect(() => {
     setMounted(true);
@@ -38,13 +39,14 @@ const Write = () => {
   //   (state: { user: { user: string } }) => state.user.user
   // );
   const state = store.getState() as RootState;
-  const user = mounted && state?.user?.user;
+
 
   useEffect(() => {
+    setUser(mounted && state?.user?.user);
     if (user === null) {
       router.push("/");
     }
-  }, [user, router]);
+  }, [user, router, mounted]);
 
   const [title, setTitle] = useState<string | undefined>("");
   const [description, setDescription] = useState<string | undefined>("");

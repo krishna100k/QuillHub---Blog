@@ -32,17 +32,22 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
 
   const store = useStore();
 
-  const [mounted, setMounted] = useState<boolean>(false)
+  const [mounted, setMounted] = useState<boolean>(false);
+  const [user, setUser] = useState<string | null | boolean>(null);
+
+  const state = store.getState() as RootState;
+
 
   useEffect(() => {
     setMounted(true);
   }, [mounted])
 
-  // const user = useSelector(
-  //   (state: { user: { user: string } }) => state.user.user
-  // );
-  const state = store.getState() as RootState;
-  const user = mounted && state?.user?.user
+  useEffect(() => {
+    mounted && setUser(state?.user?.user)
+  }, [user, mounted])
+
+
+
 
 
   const logout = async () => {
@@ -52,6 +57,7 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
       });
       const data = await response.json();
       fetchUser(dispatch);
+      setUser(null);
       alert(data);
       router.push("/");
     } catch (err) {
@@ -105,7 +111,7 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
           <div className={styles.avatar}>
             <Avatar
               sx={{ width: 50, height: 50, cursor: "pointer", zIndex: 1 }}
-              alt={user}
+              alt={user as string}
               src="/static/images/avatar/1.jpg"
             />
             <LogoutIcon

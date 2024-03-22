@@ -10,7 +10,7 @@ import { loaded, loading, setUser } from "../../app/redux/userSlice";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { CircularProgress } from "@mui/material";
-import { useStore } from 'react-redux';
+import { useStore } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -25,23 +25,22 @@ interface RootState {
   user: {
     user: string;
   };
-
 }
 
- const fetchUser = async (dispatch: Dispatch<any>) => {
+const fetchUser = async (dispatch: Dispatch<any>) => {
   try {
     const response = await axios.get(`/api/me`, {
       withCredentials: true,
     });
     const userName: string = response.data;
-    dispatch(loading())
-    dispatch(setUser(userName))
-    dispatch(loaded())
+    dispatch(loading());
+    dispatch(setUser(userName));
+    dispatch(loaded());
   } catch (err) {
     console.log(err);
-    dispatch(loading())
-    dispatch(setUser(null))
-    dispatch(loaded())
+    dispatch(loading());
+    dispatch(setUser(null));
+    dispatch(loaded());
   }
 };
 
@@ -50,19 +49,27 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
 
+
+
   const store = useStore();
 
-  const [user, setUser] = useState<string | null >();
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  const state = store.getState() as RootState;
+  let user = mounted ? state?.user?.user : null;
 
   useEffect(() => {
     fetchUser(dispatch);
-  }, []);
-
-
+  }, [user]);
+  
   useEffect(() => {
-    const state = store.getState() as RootState;
-    setUser(state?.user?.user)
-  }, [user])
+    setMounted(true);
+  }, [mounted]);
+
+  
+
+  console.log(user)
+
 
 
   const logout = async () => {
@@ -95,7 +102,9 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
           <div className={styles.transparentButton1}>
             {pathname === "/write" || pathname === `/edit/${blogId}` ? (
               <>
-                {loading && <CircularProgress style={{width: "20px", height: "20px"}}/>}
+                {loading && (
+                  <CircularProgress style={{ width: "20px", height: "20px" }} />
+                )}
                 <button
                   disabled={loading}
                   onClick={submit}

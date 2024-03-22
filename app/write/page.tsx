@@ -80,6 +80,70 @@ const Write = () => {
     "video",
   ];
 
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e?.target?.files;
+    if (!files) return "File Not Found";
+    setCover(files[0]);
+    const file = files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = () => {
+        setImgAdd(reader.result as string);
+      };
+    }
+  };
+
+  const uploadFile = async () => {
+    try {
+      if (!cover) {
+        return;
+        // alert("Please Select Cover Image");
+      }
+      const imgRef = ref(imageDB, `files/${v4()}`);
+      await uploadBytes(imgRef, cover);
+      const downloadURL: string | void = await getDownloadURL(imgRef);
+      return downloadURL;
+    } catch (err) {
+      console.log(err);
+      return alert("Failed to upload Cover Image");
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      const imgUrl: string | void = await uploadFile();
+      const userResp = await axios.get(
+        `/api/authenticated/user?username=${user}`,
+        { withCredentials: true }
+      );
+      const userid = userResp.data[0].id;
+      if (!imgUrl) {
+        return alert("Cover Image Not Found!");
+      }
+      const body = {
+        userid,
+        title,
+        description,
+        image: imgUrl,
+        content,
+        username: user,
+      };
+      const response = await axios.post(`/api/authenticated/blog`, body, {
+        withCredentials: true,
+      });
+      alert(response?.data?.message);
+      setLoading(false);
+      setTitle("");
+      setDescription("");
+      setContent("");
+      setImgAdd("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return <div>Write</div>;
 };
 

@@ -152,7 +152,7 @@ const Write = () => {
 
  return (
     <div className={styles.container}>
-            <Header submit={handleSubmit} loading={loading} />
+        <Header submit={handleSubmit} loading={loading} />
       <div className={styles.contentContainer}>
         <label className={styles.customFileUpload}>
           <span>Cover Image</span>

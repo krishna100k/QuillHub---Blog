@@ -72,7 +72,7 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
       {user ? (
         <div className={styles.buttonContainer}>
           <div className={styles.transparentButton1}>
-            {pathname === "/add" || pathname === `/edit/${blogId}` ? (
+            {pathname === "/write" || pathname === `/edit/${blogId}` ? (
               <>
                 {loading && <CircularProgress style={{width: "20px", height: "20px"}}/>}
                 <button

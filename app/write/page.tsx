@@ -3,7 +3,13 @@ import Header from "@/Components/Header";
 import styles from "./add.module.css";
 import { useEffect, useState } from "react";
 import { useSelector, useStore } from "react-redux";
-import ReactQuill from "react-quill";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import("react-quill"), 
+    { 
+        loading: () => <p>Editor Loading...</p>, 
+        ssr: false 
+    }
+);
 import "react-quill/dist/quill.snow.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { imageDB } from "../config";

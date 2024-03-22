@@ -144,7 +144,40 @@ const Write = () => {
     }
   };
 
-  return <div>Write</div>;
+ return (
+    <div className={styles.container}>
+      <Header submit={handleSubmit} loading={loading} />
+      <div className={styles.contentContainer}>
+        <label className={styles.customFileUpload}>
+          <span>Cover Image</span>
+          <input type="file" accept="image/*" onChange={handleFile} />
+        </label>
+        <img className={styles.coverImg} src={imgAdd} />
+        <input
+          className={styles.title}
+          type="text"
+          placeholder="Enter a Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          className={styles.title}
+          type="text"
+          placeholder="Enter a Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <ReactQuill
+          theme="snow"
+          className="quill-editor"
+          modules={modules}
+          formats={formats}
+          value={content}
+          onChange={(html) => setContent(html)}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default Write;

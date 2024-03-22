@@ -33,9 +33,9 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
   const store = useStore();
 
   const [mounted, setMounted] = useState<boolean>(false);
-  const [user, setUser] = useState<string | null | boolean>(null);
+  const [user, setUser] = useState<string | null >();
 
-  const state = store.getState() as RootState;
+
 
 
   useEffect(() => {
@@ -43,6 +43,7 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
   }, [mounted])
 
   useEffect(() => {
+    const state = store.getState() as RootState;
     mounted && setUser(state?.user?.user)
   }, [user, mounted])
 
@@ -75,7 +76,7 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
           QuillHub
         </Link>
       </h2>
-      {user ? (
+      {user !== null ? (
         <div className={styles.buttonContainer}>
           <div className={styles.transparentButton1}>
             {pathname === "/write" || pathname === `/edit/${blogId}` ? (

@@ -29,24 +29,25 @@ const Write = () => {
   const store = useStore();
 
   const [mounted, setMounted] = useState<boolean>(false);
-  const [user, setUser] =  useState<string | null | boolean>(null)
+  const [user, setUser] =  useState<string | null >();
 
   useEffect(() => {
     setMounted(true);
   }, [mounted]);
 
-  // const user = useSelector(
-  //   (state: { user: { user: string } }) => state.user.user
-  // );
-  const state = store.getState() as RootState;
 
 
   useEffect(() => {
-    setUser(mounted && state?.user?.user);
+    const state = store.getState() as RootState;
+    mounted && setUser(state?.user?.user);
+  }, [user, mounted])
+
+  useEffect(() => {
     if (user === null) {
       router.push("/");
     }
-  }, [user, router, mounted]);
+  }, [user]);
+
 
   const [title, setTitle] = useState<string | undefined>("");
   const [description, setDescription] = useState<string | undefined>("");

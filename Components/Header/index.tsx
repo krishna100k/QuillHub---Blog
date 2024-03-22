@@ -61,14 +61,12 @@ const Header = ({ home, submit, loading, blogId }: Props) => {
   useEffect(() => {
     fetchUser(dispatch);
   }, [user]);
-  
+
   useEffect(() => {
     setMounted(true);
   }, [mounted]);
 
   
-
-  console.log(user)
 
 
 

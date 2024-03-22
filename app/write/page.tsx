@@ -167,14 +167,6 @@ const Write = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <ReactQuill
-          theme="snow"
-          className="quill-editor"
-          modules={modules}
-          formats={formats}
-          value={content}
-          onChange={(html) => setContent(html)}
-        />
       </div>
     </div>
   );
